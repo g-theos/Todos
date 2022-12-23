@@ -1,0 +1,28 @@
+.todo-item {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  background: #8b005d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+/*   cursor: pointer;
+ */}
+
+.todo-item input {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.deleted {
+  border: #8b005d;
+  background: white;
+  color: #8b005d;
+}
+
+.deleted div {
+  text-decoration: line-through;
+}
