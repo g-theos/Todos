@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect, useCallback } from 'react';
 
 import TodoList from './components/Todos/TodoList';
 import TodoInput from './components/Todos/TodoInput';
+import useFetchTodosHandler from './hooks/useFetchData';
+//import Card from './components/UI/Card';
 import styles from './App.module.css';
 
 const App = () => {
@@ -9,7 +11,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchTodosHandler = useCallback(async () => {
+  /* const fetchTodosHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -36,11 +38,11 @@ const App = () => {
       setError(error.message);
     }
     setIsLoading(false);
-  }, []);
+  }, []); */
 
   useEffect(() => {
-    fetchTodosHandler();
-  }, [fetchTodosHandler]);
+    useFetchTodosHandler(setTodos,setIsLoading, setError);
+  }, [useFetchTodosHandler]);
 
   /* const addTodoHandler = (enteredText) => {
     setTodos((prevTodos) => {
@@ -67,7 +69,7 @@ const App = () => {
         throw new Error('Something went wrong!');
       }
 
-      fetchTodosHandler();
+      useFetchTodosHandler(setTodos, setIsLoading, setError);
     } catch (error) {
       setError(error.message);
     }
@@ -104,7 +106,7 @@ const App = () => {
         return updatedTodos;
       }); */
 
-      fetchTodosHandler();
+      useFetchTodosHandler(setTodos, setIsLoading, setError);
 
     } catch (error) {
       setError(error.message);
