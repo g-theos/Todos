@@ -51,7 +51,7 @@ const App = () => {
         });
       }
 
-      setTodos(loadedTodos);
+      setTodos(loadedTodos.reverse());
     };
 
     fetchTodos(
