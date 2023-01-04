@@ -1,15 +1,15 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 import TodoList from './components/Todos/TodoList';
 import TodoInput from './components/Todos/TodoInput';
-import useFetchTodosHandler from './hooks/useFetchData';
+import useHttp from './hooks/use-http';
 //import Card from './components/UI/Card';
 import styles from './App.module.css';
 
 const App = () => {
   const [todos, setTodos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  const { isLoading, error, sendRequest: fetchTodos } = useHttp();
 
   /* const fetchTodosHandler = useCallback(async () => {
     setIsLoading(true);
@@ -41,8 +41,26 @@ const App = () => {
   }, []); */
 
   useEffect(() => {
-    useFetchTodosHandler(setTodos,setIsLoading, setError);
-  }, [useFetchTodosHandler]);
+    const transformTodos = (todosObj) => {
+      const loadedTodos = [];
+
+      for (const key in todosObj) {
+        loadedTodos.push({
+          id: key,
+          text: todosObj[key].text,
+        });
+      }
+
+      setTodos(loadedTodos);
+    };
+
+    fetchTodos(
+      {
+        url: 'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+      },
+      transformTodos
+    );
+  }, [fetchTodos]);
 
   /* const addTodoHandler = (enteredText) => {
     setTodos((prevTodos) => {
@@ -52,7 +70,7 @@ const App = () => {
     });
   }; */
 
-  const addTodoHandler = async (enteredText) => {
+  /*   const addTodoHandler = async (enteredText) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -75,6 +93,27 @@ const App = () => {
     }
     setIsLoading(false);
   };
+ */
+
+  const addTodoHandler = (enteredText) => {
+    const createTodo = (todoData) => {
+      setTodos((prevTodos) => {
+        const updatedTodos = [...prevTodos];
+        updatedTodos.unshift({ text: enteredText, id: todoData.name }); // firebase-specific => "name" contains generated id
+        return updatedTodos;
+      });
+    };
+
+    fetchTodos(
+      {
+        url: 'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+        method: 'POST',
+        body: { text: enteredText },
+        headers: { 'Content-Type': 'application/json' },
+      },
+      createTodo
+    );
+  };
 
   /* const deleteItemHandler = (todoId) => {
     setTodos((prevTodos) => {
@@ -83,7 +122,7 @@ const App = () => {
     });
   }; */
 
-  const deleteItemHandler = async (todoId) => {
+  /* const deleteItemHandler = async (todoId) => {
     setIsLoading(true);
     setError(null);
 
@@ -101,17 +140,31 @@ const App = () => {
         throw new Error('Something went wrong!');
       }
 
-      /* setTodos((prevTodos) => {
-        const updatedTodos = prevTodos.filter((todo) => todo.id !== todoId);
-        return updatedTodos;
-      }); */
-
       useFetchTodosHandler(setTodos, setIsLoading, setError);
-
     } catch (error) {
       setError(error.message);
     }
     setIsLoading(false);
+  }; */
+
+  const deleteItemHandler = (todoId) => {
+    const deleteTodo = () => {
+      setTodos((prevTodos) => {
+        const updatedTodos = prevTodos.filter((todo) => todo.id !== todoId);
+        return updatedTodos;
+      });
+    };
+
+    fetchTodos(
+      {
+        url:
+          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          todoId +
+          '.json',
+        method: 'DELETE',
+      },
+      deleteTodo
+    );
   };
 
   let content = (
