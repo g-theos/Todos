@@ -48,6 +48,7 @@ const App = () => {
         loadedTodos.push({
           id: key,
           text: todosObj[key].text,
+          checked: todosObj[key].checked,
         });
       }
 
@@ -99,7 +100,7 @@ const App = () => {
     const createTodo = (todoData) => {
       setTodos((prevTodos) => {
         const updatedTodos = [...prevTodos];
-        updatedTodos.unshift({ text: enteredText, id: todoData.name }); // firebase-specific => "name" contains generated id
+        updatedTodos.unshift({ text: enteredText, id: todoData.name, checked:false }); // firebase-specific => "name" contains generated id
         return updatedTodos;
       });
     };
@@ -108,7 +109,7 @@ const App = () => {
       {
         url: 'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
         method: 'POST',
-        body: { text: enteredText },
+        body: { text: enteredText, checked: false },
         headers: { 'Content-Type': 'application/json' },
       },
       createTodo
@@ -167,12 +168,31 @@ const App = () => {
     );
   };
 
+  const checkItemHandler = (todoId, checked) => {
+    const modifyTodo = () => {
+      
+    };
+
+    fetchTodos(
+      {
+        url:
+          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          todoId +
+          '.json',
+        method: 'PATCH',
+        body: { checked },
+        headers: { 'Content-Type': 'application/json' },
+      },
+      modifyTodo
+    );
+  };
+
   let content = (
     <p style={{ textAlign: 'center' }}>No Tasks found. Maybe add one?</p>
   );
 
   if (todos.length > 0) {
-    content = <TodoList todos={todos} onDeleteItem={deleteItemHandler} />;
+    content = <TodoList todos={todos} onDeleteItem={deleteItemHandler} onCheckItem={checkItemHandler}/>;
   }
 
   if (error) {

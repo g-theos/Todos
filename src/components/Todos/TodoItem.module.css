@@ -17,12 +17,12 @@
   cursor: pointer;
 }
 
-.deleted {
+.checked {
   border: #8b005d;
   background: white;
   color: #8b005d;
 }
 
-.deleted div {
+.checked div {
   text-decoration: line-through;
 }

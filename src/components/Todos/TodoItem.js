@@ -3,10 +3,15 @@ import Button from '../UI/Button';
 import classes from './TodoItem.module.css';
 
 const TodoItem = (props) => {
-  const [deletedTodo, setDeletedTodo] = useState(false);
+  console.log(props.checked)
+  
+  const [checkedTodo, setCheckedTodo] = useState(props.checked);
+  console.log('checkedTodo:'+checkedTodo)
 
   const checkboxHandler = () => {
-    setDeletedTodo((prevState) => !prevState);
+    setCheckedTodo((prevState) => !prevState);
+    console.log('inside handler'+checkedTodo)
+    props.onCheck(props.id, props.checked);
   };
 
   const deleteHandler = () => {
@@ -16,14 +21,14 @@ const TodoItem = (props) => {
   return (
     <li
       className={`${classes['todo-item']} ${
-        deletedTodo === true ? classes.deleted : ''
+        checkedTodo === true ? classes.checked : ''
       }`}
     >
       <div>
         <input type="checkbox" onClick={checkboxHandler}></input>
         {props.children}
       </div>
-      {deletedTodo && <Button onClick={deleteHandler}>Delete</Button>}
+      {checkedTodo && <Button onClick={deleteHandler}>Delete</Button>}
     </li>
   );
 };
