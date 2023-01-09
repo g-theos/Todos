@@ -168,9 +168,14 @@ const App = () => {
     );
   };
 
-  const checkItemHandler = (todoId, checked) => {
+  const checkItemHandler = (todoId,checked) => {
     const modifyTodo = () => {
-      
+      setTodos((prevTodos) => {
+        const checkedTodoIndex = prevTodos.findIndex((todo) => todo.id === todoId);
+        prevTodos[checkedTodoIndex].checked = checked;
+        const updatedTodos = prevTodos;
+        return updatedTodos;
+      });
     };
 
     fetchTodos(
