@@ -100,7 +100,11 @@ const App = () => {
     const createTodo = (todoData) => {
       setTodos((prevTodos) => {
         const updatedTodos = [...prevTodos];
-        updatedTodos.unshift({ text: enteredText, id: todoData.name, checked:false }); // firebase-specific => "name" contains generated id
+        updatedTodos.unshift({
+          text: enteredText,
+          id: todoData.name,
+          checked: false,
+        }); // firebase-specific => "name" contains generated id
         return updatedTodos;
       });
     };
@@ -170,7 +174,7 @@ const App = () => {
 
   const checkItemHandler = (todoId) => {
     const checkedTodoIndex = todos.findIndex((todo) => todo.id === todoId);
-    const newCheckValue = !todos[checkedTodoIndex].checked
+    const newCheckValue = !todos[checkedTodoIndex].checked;
 
     const modifyTodo = () => {
       setTodos((prevTodos) => {
@@ -199,7 +203,13 @@ const App = () => {
   );
 
   if (todos.length > 0) {
-    content = <TodoList todos={todos} onDeleteItem={deleteItemHandler} onCheckItem={checkItemHandler}/>;
+    content = (
+      <TodoList
+        todos={todos}
+        onDeleteItem={deleteItemHandler}
+        onCheckItem={checkItemHandler}
+      />
+    );
   }
 
   if (error) {
