@@ -1,8 +1,6 @@
 //import { useState } from 'react';
 import Button from '../UI/Button';
 import classes from './TodoItem.module.css';
-import useHttp from '../../hooks/use-http';
-
 
 const TodoItem = (props) => {
   console.log(props.checked)
