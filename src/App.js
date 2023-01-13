@@ -174,7 +174,7 @@ const App = () => {
 
   const checkItemHandler = (todoId) => {
     const checkedTodoIndex = todos.findIndex((todo) => todo.id === todoId);
-    const newCheckValue = !todos[checkedTodoIndex].checked
+    const newCheckValue = !todos[checkedTodoIndex].checked;
 
     const modifyTodo = () => {
       setTodos((prevTodos) => {
@@ -207,6 +207,7 @@ const App = () => {
       <TodoList
         todos={todos}
         onDeleteItem={deleteItemHandler}
+        onCheckItem={checkItemHandler}
       />
     );
   }
