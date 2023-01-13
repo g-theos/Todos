@@ -172,6 +172,32 @@ const App = () => {
     );
   };
 
+  const checkItemHandler = (todoId) => {
+    const checkedTodoIndex = todos.findIndex((todo) => todo.id === todoId);
+    const newCheckValue = !todos[checkedTodoIndex].checked
+
+    const modifyTodo = () => {
+      setTodos((prevTodos) => {
+        const updatedTodos = [...prevTodos];
+        updatedTodos[checkedTodoIndex].checked = newCheckValue;
+        return updatedTodos;
+      });
+    };
+
+    fetchTodos(
+      {
+        url:
+          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          todoId +
+          '.json',
+        method: 'PATCH',
+        body: { checked: newCheckValue },
+        headers: { 'Content-Type': 'application/json' },
+      },
+      modifyTodo
+    );
+  };
+
   let content = (
     <p style={{ textAlign: 'center' }}>No Tasks found. Maybe add one?</p>
   );
