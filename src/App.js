@@ -170,15 +170,16 @@ const App = () => {
 
   const checkItemHandler = (todoId) => {
     const checkedTodoIndex = todos.findIndex((todo) => todo.id === todoId);
+    const newCheckValue = !todos[checkedTodoIndex].checked
+
     const modifyTodo = () => {
       setTodos((prevTodos) => {
-        prevTodos[checkedTodoIndex].checked = !prevTodos[checkedTodoIndex].checked;
-        const updatedTodos = prevTodos;
-        console.log('updated todos:'+updatedTodos);
+        const updatedTodos = [...prevTodos];
+        updatedTodos[checkedTodoIndex].checked = newCheckValue;
         return updatedTodos;
       });
     };
-    console.log('todos: '+todos);
+
     fetchTodos(
       {
         url:
@@ -186,7 +187,7 @@ const App = () => {
           todoId +
           '.json',
         method: 'PATCH',
-        body: { checked: !todos[checkedTodoIndex].checked },
+        body: { checked: newCheckValue },
         headers: { 'Content-Type': 'application/json' },
       },
       modifyTodo
