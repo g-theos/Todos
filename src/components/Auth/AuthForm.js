@@ -1,11 +1,17 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import useHttp from '../../hooks/use-http';
+import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom';
 
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
+  const authCtx = useContext(AuthContext);
+  const history = useHistory();  
+
   const [isLoginIsNotSignUp, setIsLoginIsNotSignUp] = useState(true);
   const [formIsValid, setFormIsValid] = useState(true);
   const { isLoading, error, sendRequest: fetchUser } = useHttp();
@@ -23,11 +29,12 @@ const AuthForm = () => {
    /* if (!(enteredPassword.trim().length > 8)) {
       setFormIsValid(false);
       return;
-    }
+    } */
 
-    setFormIsValid(true); */
-
-    const userData = () => {};
+    const userData = (data) => {
+      authCtx.login(data.idToken);
+      history.replace('/');
+    };
 
     let url;
     if (isLoginIsNotSignUp) {
@@ -51,6 +58,8 @@ const AuthForm = () => {
       },
       userData
     );
+
+    setFormIsValid(true);
   };
 
   return (
