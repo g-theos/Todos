@@ -13,7 +13,7 @@ const AuthForm = () => {
   const history = useHistory();  
 
   const [isLoginIsNotSignUp, setIsLoginIsNotSignUp] = useState(true);
-  const [formIsValid, setFormIsValid] = useState(true);
+  //const [formIsValid, setFormIsValid] = useState(true);
   const { isLoading, error, sendRequest: fetchUser } = useHttp();
 
   const switchAuthModeHandler = () => {
@@ -26,13 +26,13 @@ const AuthForm = () => {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-   /* if (!(enteredPassword.trim().length > 8)) {
+   /* if (!(enteredPassword.trim().length >= 8)) {
       setFormIsValid(false);
       return;
     } */
 
     const userData = (data) => {
-      authCtx.login(data.idToken);
+      authCtx.login(data.idToken, data.localId);
       history.replace('/');
     };
 
@@ -59,7 +59,7 @@ const AuthForm = () => {
       userData
     );
 
-    setFormIsValid(true);
+    //setFormIsValid(true);
   };
 
   return (
@@ -76,6 +76,7 @@ const AuthForm = () => {
             type="password"
             id="password"
             required
+            minLength='8'
             ref={passwordInputRef}
           />
         </div>
@@ -95,11 +96,11 @@ const AuthForm = () => {
               : 'Login with existing account'}
           </button>
         </div>
-        <div>
+        {/* <div>
           {!formIsValid && (
             <p>Please enter a password with at least 8 characters</p>
           )}
-        </div>
+        </div> */}
       </form>
     </section>
   );

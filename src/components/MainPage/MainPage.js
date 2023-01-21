@@ -1,8 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 
 import TodoList from '../Todos/TodoList';
 import TodoInput from '../Todos/TodoInput';
 import useHttp from '../../hooks/use-http';
+import AuthContext from '../../store/auth-context';
 //import Card from './components/UI/Card';
 import styles from './MainPage.module.css';
 
@@ -10,6 +11,8 @@ const MainPage = () => {
   const [todos, setTodos] = useState([]);
 
   const { isLoading, error, sendRequest: fetchTodos } = useHttp();
+
+  const authCtx = useContext(AuthContext);
 
   /* const fetchTodosHandler = useCallback(async () => {
     setIsLoading(true);
@@ -57,11 +60,14 @@ const MainPage = () => {
 
     fetchTodos(
       {
-        url: 'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+        url:
+          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          authCtx.userId +
+          '.json',
       },
       transformTodos
     );
-  }, [fetchTodos]);
+  }, [fetchTodos,authCtx]);
 
   /* const addTodoHandler = (enteredText) => {
     setTodos((prevTodos) => {
@@ -111,7 +117,10 @@ const MainPage = () => {
 
     fetchTodos(
       {
-        url: 'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+        url:
+          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          authCtx.userId +
+          '.json',
         method: 'POST',
         body: { text: enteredText, checked: false },
         headers: { 'Content-Type': 'application/json' },
@@ -164,6 +173,8 @@ const MainPage = () => {
       {
         url:
           'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          authCtx.userId +
+          '/' +
           todoId +
           '.json',
         method: 'DELETE',
@@ -188,6 +199,8 @@ const MainPage = () => {
       {
         url:
           'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          authCtx.userId +
+          '/' +
           todoId +
           '.json',
         method: 'PATCH',
