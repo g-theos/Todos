@@ -81,7 +81,7 @@ const AuthForm = () => {
           />
         </div>
         <div className={classes.actions}>
-          {!isLoading && !error && (
+          {!isLoading && (
             <button>{isLoginIsNotSignUp ? 'Login' : 'Create Account'}</button>
           )}
           {isLoading && <p>Sending request...</p>}
