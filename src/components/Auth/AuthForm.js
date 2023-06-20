@@ -39,10 +39,10 @@ const AuthForm = () => {
     let url;
     if (isLoginIsNotSignUp) {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDaQBW_7UGJxSZiGUVYdEwnf9iyDqHFzdc';
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+process.env.REACT_APP_FIREBASE_API_KEY;
     } else {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDaQBW_7UGJxSZiGUVYdEwnf9iyDqHFzdc';
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+process.env.REACT_APP_FIREBASE_API_KEY;
     }
 
     fetchUser(

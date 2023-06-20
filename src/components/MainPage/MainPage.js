@@ -19,7 +19,7 @@ const MainPage = () => {
     setError(null);
     try {
       const response = await fetch(
-        'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json'
+        process.env.REACT_APP_FIREBASE_DATABASE_URL + '.json'
       );
       if (!response.ok) {
         throw new Error('Something went wrong!');
@@ -61,7 +61,7 @@ const MainPage = () => {
     fetchTodos(
       {
         url:
-          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          process.env.REACT_APP_FIREBASE_DATABASE_URL + '/' +
           authCtx.userId +
           '.json',
       },
@@ -82,7 +82,7 @@ const MainPage = () => {
     setError(null);
     try {
       const response = await fetch(
-        'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+        process.env.REACT_APP_FIREBASE_DATABASE_URL + '.json',
         {
           method: 'POST',
           body: JSON.stringify({ text: enteredText }),
@@ -118,7 +118,7 @@ const MainPage = () => {
     fetchTodos(
       {
         url:
-          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          process.env.REACT_APP_FIREBASE_DATABASE_URL + '/' +
           authCtx.userId +
           '.json',
         method: 'POST',
@@ -142,7 +142,7 @@ const MainPage = () => {
 
     try {
       const response = await fetch(
-        'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+        process.env.REACT_APP_FIREBASE_DATABASE_URL + '/' +
           todoId +
           '.json',
         {
@@ -172,7 +172,7 @@ const MainPage = () => {
     fetchTodos(
       {
         url:
-          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          process.env.REACT_APP_FIREBASE_DATABASE_URL + '/' +
           authCtx.userId +
           '/' +
           todoId +
@@ -198,7 +198,7 @@ const MainPage = () => {
     fetchTodos(
       {
         url:
-          'https://react-http-75feb-default-rtdb.europe-west1.firebasedatabase.app/todos/' +
+          process.env.REACT_APP_FIREBASE_DATABASE_URL + '/' +
           authCtx.userId +
           '/' +
           todoId +

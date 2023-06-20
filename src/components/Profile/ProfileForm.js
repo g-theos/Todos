@@ -23,7 +23,7 @@ const ProfileForm = () => {
 
     fetchPassword(
       {
-        url: 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDaQBW_7UGJxSZiGUVYdEwnf9iyDqHFzdc',
+        url: 'https://identitytoolkit.googleapis.com/v1/accounts:update?key='+process.env.REACT_APP_FIREBASE_API_KEY,
         method: 'POST',
         body: {
           idToken: authCtx.token,
